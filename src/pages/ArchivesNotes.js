@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import NotesListEmpty from '../components/notes/NoteListEmpty';
 import NotesList from '../components/notes/NotesList';
 import SearchBar from '../components/SearchBar';
+import PropTypes from 'prop-types';
 
 function ArchivesNotesWrapper({ archivesNotes }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,6 +58,15 @@ class ArchivesNotes extends React.Component {
       </section>
     )
   }
+}
+
+ArchivesNotes.propTypes = {
+  archivesNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  keywordChange: PropTypes.func.isRequired
+}
+
+ArchivesNotesWrapper.propTypes = {
+  archivesNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default ArchivesNotesWrapper;

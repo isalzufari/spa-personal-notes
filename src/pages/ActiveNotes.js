@@ -4,6 +4,7 @@ import { HomePageAction } from '../components/ActionButton';
 import NotesListEmpty from '../components/notes/NoteListEmpty';
 import NotesList from '../components/notes/NotesList';
 import SearchBar from '../components/SearchBar';
+import PropTypes from 'prop-types';
 
 function ActiveNotesWrapper({ activeNotes }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,6 +60,15 @@ class ActiveNotes extends React.Component {
       </section>
     );
   }
+}
+
+ActiveNotes.propTypes = {
+  activeNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  keywordChange: PropTypes.func.isRequired
+}
+
+ActiveNotesWrapper.propTypes = {
+  activeNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default ActiveNotesWrapper;
