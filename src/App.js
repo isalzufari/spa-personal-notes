@@ -29,7 +29,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<ActiveNotes activeNotes={activeNotes} />} />
-          <Route path="/archives" element={<ArchivesNotes ArchivesNotes={archivesNotes} />} />
+          <Route path="/archives" element={<ArchivesNotes archivesNotes={archivesNotes} />} />
           <Route path="/notes/:id" element={<DetailNote />} />
           <Route path="/notes/new" element={<NewNote addNote={onAddNoteHandler} />} />
         </Routes>

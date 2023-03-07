@@ -1,37 +1,9 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { HomePageAction } from '../components/ActionButton';
+import NotesListEmpty from '../components/notes/NoteListEmpty';
 import NotesList from '../components/notes/NotesList';
 import SearchBar from '../components/SearchBar';
-
-// function ActiveNotes({ activeNotes }) {
-//   const [searchParams, setSearchParams] = useSearchParams();
-
-//   const keyword = searchParams.get('keyword');
-//   function changeSearchParams(keyword) {
-//     setSearchParams({ keyword });
-//   }
-
-//   function onKeywordChangeHandler(keyword) {
-//     console.log(keyword);
-//     changeSearchParams(keyword)
-//   }
-
-//   const notesFilter = activeNotes.filter((note) => {
-//     return note.title.toLowerCase().includes(
-//       keyword.toLowerCase()
-//     );
-//   })
-
-//   return (
-//     <section className='homepage'>
-//       <h2>Catatan Aktif</h2>
-//       <SearchBar defaultKeyword={keyword} keywordChange={onKeywordChangeHandler} />
-//       <NotesList notes={notesFilter} />
-//       <HomePageAction />
-//     </section>
-//   );
-// }
 
 function ActiveNotesWrapper({ activeNotes }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,13 +44,17 @@ class ActiveNotes extends React.Component {
       return note.title.toLowerCase().includes(
         this.state.keyword.toLowerCase()
       );
-    })
+    });
 
     return (
       <section className='homepage'>
         <h2>Catatan Aktif</h2>
         <SearchBar defaultKeyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler} />
-        <NotesList notes={notesFilter} />
+        {notesFilter.length === 0 ?
+          <NotesListEmpty />
+          :
+          <NotesList notes={notesFilter} />
+        }
         <HomePageAction />
       </section>
     )
