@@ -57,7 +57,7 @@ class ActiveNotes extends React.Component {
         }
         <HomePageAction />
       </section>
-    )
+    );
   }
 }
 

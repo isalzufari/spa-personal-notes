@@ -12,7 +12,6 @@ function Navigation() {
           </li>
         </ul>
       </nav>
-
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NewPageAction } from '../components/ActionButton';
-import { addNote } from '../utils/local-data'
 
 class NewNote extends React.Component {
   constructor(props) {
@@ -48,6 +48,10 @@ class NewNote extends React.Component {
       </section>
     )
   }
+}
+
+NewNote.propTypes = {
+  addNote: PropTypes.func.isRequired,
 }
 
 export default NewNote;
