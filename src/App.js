@@ -7,6 +7,7 @@ import ActiveNotes from './pages/ActiveNotes';
 import ArchivesNotes from './pages/ArchivesNotes';
 import DetailNote from './pages/DetailNote';
 import NewNote from './pages/NewNote';
+import PageNotFound from './pages/PageNotFound';
 
 import { getActiveNotes, getArchivedNotes, addNote } from './utils/local-data';
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/archives" element={<ArchivesNotes archivesNotes={archivesNotes} />} />
           <Route path="/notes/:id" element={<DetailNote />} />
           <Route path="/notes/new" element={<NewNote addNote={onAddNoteHandler} />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </main>
     </div>
