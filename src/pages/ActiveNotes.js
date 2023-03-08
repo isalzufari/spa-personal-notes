@@ -9,7 +9,11 @@ import PropTypes from 'prop-types';
 function ActiveNotesWrapper({ activeNotes }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const keyword = searchParams.get('keyword');
+  let keyword = searchParams.get('keyword');
+
+  if (keyword === null) {
+    keyword = '';
+  }
 
   function changeSearchParams(keyword) {
     setSearchParams({ keyword });
@@ -26,6 +30,8 @@ class ActiveNotes extends React.Component {
       notes: props.activeNotes,
       keyword: props.defaultKeyword || '',
     }
+
+    console.log(props.defaultKeyword);
 
     this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
   }
@@ -64,7 +70,8 @@ class ActiveNotes extends React.Component {
 
 ActiveNotes.propTypes = {
   activeNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  keywordChange: PropTypes.func.isRequired
+  keywordChange: PropTypes.func.isRequired,
+  defaultKeyword: PropTypes.string.isRequired
 }
 
 ActiveNotesWrapper.propTypes = {
