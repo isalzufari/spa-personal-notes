@@ -75,7 +75,7 @@ import { getActiveNotes } from '../utils/api-data';
 //   }
 // }
 
-function ActiveNotes() {
+function ActiveNotes({ activeNotes }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [initializing, setInitializing] = React.useState(true);
   const [notes, setNotes] = React.useState([]);
@@ -83,12 +83,19 @@ function ActiveNotes() {
     return searchParams.get('keyword') || '';
   });
 
+  // console.log(activeNotes);
   React.useEffect(() => {
-    getActiveNotes().then(({ data }) => {
-      setNotes(data);
-    }).then(() => {
+    function loadNotes() {
+      setNotes(activeNotes);
       setInitializing(false);
-    });
+    }
+
+    loadNotes();
+    // getActiveNotes().then(({ data }) => {
+    //   setNotes(data);
+    // }).then(() => {
+    //   setInitializing(false);
+    // });
   }, []);
 
   function onKeywordChangeHandler(keyword) {
