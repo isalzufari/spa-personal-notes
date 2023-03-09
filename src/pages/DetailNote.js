@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DetailPageAction } from '../components/ActionButton';
-import { getNote, archiveNote, unarchiveNote, deleteNote, getArchivedNotes } from '../utils/api-data';
+import { getNote, archiveNote, unarchiveNote, deleteNote } from '../utils/api-data';
 import { showFormattedDate } from '../utils'
 
-function DetailNote({ refreshNotes }) {
+function DetailNote() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initializing, setInitializing] = React.useState(true);
@@ -18,19 +18,16 @@ function DetailNote({ refreshNotes }) {
 
   async function onHandleArchiveNote(id) {
     await archiveNote(id);
-    await refreshNotes();
     navigate('/');
   }
 
   async function onHandleDeleteNote(id) {
     await deleteNote(id);
-    await refreshNotes();
     navigate('/');
   }
 
   async function onHandleUnarchiveNote(id) {
     await unarchiveNote(id);
-    await refreshNotes();
     navigate('/');
   }
 

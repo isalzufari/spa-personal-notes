@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../utils/api-data';
 import LoginInput from '../components/LoginInput';
+import PropTypes from 'prop-types';
 
 function LoginPage({ loginSuccess }) {
 
@@ -21,6 +22,10 @@ function LoginPage({ loginSuccess }) {
       <p>Belum punya akun? <Link to="/register">Daftar di sini</Link></p>
     </section>
   )
+}
+
+LoginPage.propTypes = {
+  loginSuccess: PropTypes.func.isRequired
 }
 
 export default LoginPage;

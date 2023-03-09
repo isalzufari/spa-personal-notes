@@ -12,7 +12,6 @@ import PageNotFound from './pages/PageNotFound';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
-// import { getActiveNotes, getArchivedNotes, addNote } from './utils/local-data';
 import { getUserLogged, putAccessToken, getActiveNotes, getArchivedNotes, addNote } from './utils/api-data';
 
 import ThemeContext from './context/ThemeContext';
@@ -25,17 +24,6 @@ function App() {
 
   const localTheme = localStorage.getItem('theme') || 'light';
   const [theme, setTheme] = React.useState(localTheme);
-
-  const [activeNotes, setActiveNotes] = React.useState(() => {
-    getActiveNotes().then(({ data }) => {
-      setActiveNotes(data);
-    });
-  });
-  const [archivesNotes, setArchivesNotes] = React.useState(() => {
-    getArchivedNotes().then(({ data }) => {
-      setArchivesNotes(data);
-    });
-  });
 
   React.useEffect(() => {
     async function getUser() {
@@ -54,17 +42,7 @@ function App() {
 
   async function onAddNoteHandler(note) {
     await addNote(note);
-    const { data } = await getActiveNotes();
-    setActiveNotes(data);
     navigate('/');
-  }
-
-  async function refreshNoteHandler() {
-    const { activeNotes } = await getActiveNotes();
-    setActiveNotes(activeNotes);
-
-    const { archivesNotes } = await getArchivedNotes();
-    setArchivesNotes(archivesNotes);
   }
 
   async function onLoginSuccess({ accessToken }) {
@@ -81,7 +59,6 @@ function App() {
   }
 
   const toggleTheme = () => {
-    console.log(theme);
     setTheme((prevTheme) => {
       const newTheme = prevTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', newTheme);
@@ -103,17 +80,19 @@ function App() {
 
   if (authedUser === null) {
     return (
-      <div className='app-container'>
-        <header>
-          <h1>Aplikasi Catatan</h1>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </main>
-      </div>
+      <ThemeContext.Provider value={localContextValue}>
+        <div className='app-container'>
+          <header>
+            <Navigation logout={onLogout} authedUser={authedUser} />
+          </header>
+          <main>
+            <Routes>
+              <Route path="/*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+          </main>
+        </div>
+      </ThemeContext.Provider>
     );
   }
 
@@ -125,9 +104,9 @@ function App() {
         </header>
         <main>
           <Routes>
-            <Route path="/" element={<ActiveNotes activeNotes={activeNotes} />} />
-            <Route path="/archives" element={<ArchivesNotes archivesNotes={archivesNotes} />} />
-            <Route path="/notes/:id" element={<DetailNote refreshNotes={refreshNoteHandler} />} />
+            <Route path="/" element={<ActiveNotes />} />
+            <Route path="/archives" element={<ArchivesNotes />} />
+            <Route path="/notes/:id" element={<DetailNote />} />
             <Route path="/notes/new" element={<NewNote addNote={onAddNoteHandler} />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
